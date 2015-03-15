@@ -1,6 +1,8 @@
 Image Viewer
 ============
 
+A simple, lightweight jQuery plugin to quick browse a list of viewport-scaled images with a full-size option.
+
 Usage
 -----
 
@@ -16,9 +18,9 @@ Usage
 
 ```html
 <div id="viewer">
-    <img src="path/to/image1.jpg" title="Image 1" />
-    <img src="path/to/image2.jpg" title="Image 2" />
-    <img src="path/to/image3.jpg" title="Image 3" />
+    <div class="image" data-src="path/to/image1.jpg" data-title="Image 1"></div>
+    <div class="image" data-src="path/to/image2.jpg" data-title="Image 2"></div>
+    <div class="image" data-src="path/to/image3.jpg" data-title="Image 3"></div>
 </div>
 ```
 
