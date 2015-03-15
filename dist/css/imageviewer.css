@@ -48,4 +48,5 @@
     background-position: 50% 50%;
     background-size: contain; }
     #viewer .image.active {
-      display: block; }
+      display: block;
+      margin: 0 auto; }
