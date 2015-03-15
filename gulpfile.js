@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint'),
     sass = require('gulp-sass'),
     minifycss = require('gulp-minify-css'),
+    livereload = require('gulp-livereload'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename');
@@ -38,11 +39,16 @@ gulp.task('scripts', function () {
 
 // Watch Files For Changes
 gulp.task('watch', function () {
-
     gulp.start('lint', 'sass', 'scripts');
 
     gulp.watch('./src/js/*.js', ['lint', 'scripts']);
     gulp.watch('./src/sass/*.scss', ['sass']);
+
+    // Create LiveReload server
+    livereload.listen();
+
+    // Watch any files in dist/, reload on change
+    gulp.watch(['dist/**']).on('change', livereload.changed);
 });
 
 // Default Task
