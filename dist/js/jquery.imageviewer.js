@@ -3,7 +3,9 @@
     var defaults = {
         "interfaceTop": true, // Show the top details bar
         "interfaceNav": true, // Show the next and previous buttons
+        "keyboardNav": true, // Enable arrow keys to navigate images
         "loadAtStart": 2 // How many images to load on init (minimum: 2)
+
     };
 
     $.fn.imageViewer = function (options) {
@@ -59,6 +61,17 @@
                     setActiveImage(prevImage());
                 }
             });
+
+            // Listen for keypress inside viewer
+            if (viewer.settings.keyboardNav) {
+                $(document).keydown(function(e) {
+                    if (e.keyCode == 37) {
+                        setActiveImage(prevImage());
+                    } else if (e.keyCode == 39) {
+                        setActiveImage(nextImage());
+                    }
+                });
+            }
 
         };
 

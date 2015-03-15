@@ -49,6 +49,13 @@ default: true
 options: boolean (true / false)
 ```
 
+**keyboardNav** Allow keyboard image switching with the arrow keys
+
+```
+default: true
+options: boolean (true / false)
+```
+
 **loadAtStart** How many images to load on init
 
 ```
