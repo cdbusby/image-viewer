@@ -1,7 +1,7 @@
 Image Viewer
 ============
 
-A simple, lightweight jQuery plugin to quick browse a list of viewport-scaled images with a full-size option.
+A simple, lightweight jQuery plugin to quickly browse a list of viewport-scaled images with a full-size option.
 
 Usage
 -----
@@ -74,6 +74,6 @@ gulp watch
 Version History
 ---------------
 
-**1.0.0**
+**0.1.0**
 
 * Initial release
