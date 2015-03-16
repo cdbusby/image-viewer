@@ -5,19 +5,18 @@
         "interfaceNav": true, // Show the next and previous buttons
         "keyboardNav": true, // Enable arrow keys to navigate images
         "loadAtStart": 2 // How many images to load on init (minimum: 2)
-
     };
 
     $.fn.imageViewer = function (options) {
 
-        if (this.length === 0) {
-            return this;
+        if ($(this).length === 0) {
+            return $(this);
         }
 
         var viewer = {},
-            el = this;
+            el = $(this);
 
-        viewer.settings = $.extend({}, defaults, options);
+        viewer.settings = $.extend({}, defaults);
         viewer.images = el.children(".image");
         viewer.firstImage = viewer.images.slice(0, 1);
         viewer.numImages = viewer.images.length;
@@ -73,6 +72,14 @@
                 });
             }
 
+            // Listen for window resize and adjust some variables
+            $(window).resize(function() {
+                var width = el.width();
+                var height = el.height();
+
+                setImageDetails(el.find('.active'), width, height);
+            });
+
         };
 
         var buildInterface = function (interface) {
@@ -84,6 +91,7 @@
                     '<li class="image-src"><span class="label">Filename:</span> <span class="value"></span>' +
                     '<li class="image-width"><span class="label">Width:</span> <span class="value"></span>' +
                     '<li class="image-height"><span class="label">Height:</span> <span class="value"></span>' +
+                    '<li class="image-scale"><span class="label">Scale:</span> <span class="value"></span>' +
                     '</ul>' +
                     '</section>'
                 );
@@ -101,7 +109,7 @@
         var setActiveImage = function (image) {
             viewer.images.removeClass("active");
             image.addClass("active");
-            setImageDetails(image);
+            $(window).trigger('resize');
             loadImages(nextImage());
             loadImages(prevImage());
         };
@@ -124,17 +132,44 @@
             }
         };
 
-        var setImageDetails = function (image) {
+        var setImageDetails = function (image, width, height) {
             var details = {
                 'title': image.attr("data-title"),
                 'src': image.attr("data-src").replace(/^.*[\\\/]/, ''),
                 'width': image.attr("data-orig-width"),
-                'height': image.attr("data-orig-height")
+                'height': image.attr("data-orig-height"),
+                'scale': getImageScale(image, width, height)
             };
             $(".image-title .value").text(details.title);
             $(".image-src .value").text(details.src);
             $(".image-width .value").text(details.width);
             $(".image-height .value").text(details.height);
+            $(".image-scale .value").text(details.scale);
+        };
+
+        // Still a work in progress
+        var getImageScale = function(image, width, height) {
+            var scale,
+                viewerWidth = width,
+                viewerHeight = height,
+                imageWidth = image.attr("data-orig-width"),
+                imageHeight = image.attr("data-orig-height");
+            var viewerRatio = viewerWidth / viewerHeight;
+            var imageRatio = imageWidth / imageHeight;
+            if (imageRatio < 1) {
+                if (viewerRatio > imageRatio) {
+                    scale = viewerHeight / imageHeight;
+                } else {
+                    scale = viewerWidth / imageWidth;
+                }
+            } else {
+                if (imageRatio > viewerRatio) {
+                    scale = viewerWidth / imageWidth;
+                } else {
+                    scale = viewerHeight / imageHeight;
+                }
+            }
+            return Math.round(scale * 100) + "%";
         };
 
         var toggleImageSize = function (image) {
@@ -166,7 +201,7 @@
                     image.css("background-image", "url(" + imageEl.src + ")");
                     image.addClass('loaded');
                     if (updateDetails) {
-                        setImageDetails(image);
+                        $(window).trigger('resize');
                     }
                 };
 
@@ -174,7 +209,9 @@
         };
 
         // Initialize the app!
-        init();
+        return el.each(function() {
+            init();
+        });
 
     };
 
