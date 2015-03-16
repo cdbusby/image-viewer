@@ -2,11 +2,13 @@
 var gulp = require('gulp');
 
 // Include Our Plugins
-var jshint = require('gulp-jshint');
-var sass = require('gulp-ruby-sass');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
+var jshint = require('gulp-jshint'),
+    sass = require('gulp-sass'),
+    minifycss = require('gulp-minify-css'),
+    livereload = require('gulp-livereload'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
+    rename = require('gulp-rename');
 
 // Lint Task
 gulp.task('lint', function () {
@@ -16,12 +18,13 @@ gulp.task('lint', function () {
 });
 
 // Compile Our Sass
-gulp.task('sass', function () {
-    return sass('./src/sass/')
-        .on('error', function (err) {
-            console.error('Error!', err.message);
-        })
-        .pipe(gulp.dest('./dist/css'));
+gulp.task('sass', function() {
+    return gulp.src('src/sass/*.scss')
+        .pipe(sass({ style: 'expanded' }))
+        .pipe(gulp.dest('dist/css'))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(minifycss())
+        .pipe(gulp.dest('dist/css'));
 });
 
 // Concatenate & Minify JS
@@ -36,11 +39,16 @@ gulp.task('scripts', function () {
 
 // Watch Files For Changes
 gulp.task('watch', function () {
-
     gulp.start('lint', 'sass', 'scripts');
 
     gulp.watch('./src/js/*.js', ['lint', 'scripts']);
     gulp.watch('./src/sass/*.scss', ['sass']);
+
+    // Create LiveReload server
+    livereload.listen();
+
+    // Watch any files in dist/, reload on change
+    gulp.watch(['dist/**']).on('change', livereload.changed);
 });
 
 // Default Task

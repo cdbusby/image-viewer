@@ -49,6 +49,13 @@ default: true
 options: boolean (true / false)
 ```
 
+**keyboardNav** Allow keyboard image switching with the arrow keys
+
+```
+default: true
+options: boolean (true / false)
+```
+
 **loadAtStart** How many images to load on init
 
 ```
@@ -64,7 +71,7 @@ npm install --save-dev gulp
 ```
 
 ```
-npm install gulp-jshint gulp-ruby-sass gulp-concat gulp-uglify gulp-rename --save-dev
+npm install gulp-jshint gulp-ruby-sass gulp-minify-css gulp-livereload gulp-concat gulp-uglify gulp-rename --save-dev
 ```
 
 ```
@@ -73,6 +80,15 @@ gulp watch
 
 Version History
 ---------------
+
+**0.2.0**
+
+* Images now centre on resize
+* Added minified CSS file
+* Reduced sample image size
+* Added scaled image size to top interface bar
+* Added keyboard navigation for previous and next buttons
+* Changes to sample HTML file
 
 **0.1.0**
 
