@@ -81,6 +81,15 @@ gulp watch
 Version History
 ---------------
 
+**0.2.0**
+
+* Images now centre on resize
+* Added minified CSS file
+* Reduced sample image size
+* Added scaled image size to top interface bar
+* Added keyboard navigation for previous and next buttons
+* Changes to sample HTML file
+
 **0.1.0**
 
 * Initial release
