@@ -35,7 +35,21 @@ $(document).ready(function(){
 Settings
 --------
 
+**selector** Class of images to be includes
+
+```
+default: ".image"
+options: string
+```
+
 **interfaceTop** Show the image information
+
+```
+default: true
+options: boolean (true / false)
+```
+
+**interfaceBottom** Show the image details
 
 ```
 default: true
@@ -67,11 +81,8 @@ Build Instructions
 ------------------
 
 ```
-npm install --save-dev gulp
-```
+npm install
 
-```
-npm install gulp-jshint gulp-sass gulp-minify-css gulp-livereload gulp-concat gulp-uglify gulp-rename --save-dev
 ```
 
 ```
@@ -80,6 +91,14 @@ gulp watch
 
 Version History
 ---------------
+
+**0.3.0**
+
+* Split up interface and added extra options
+* Fixing bug where passing in settings didn't do anything
+* Navigating by keyboard has more consistent behaviour
+* Removed dependency on .image class
+* Updating build instructions
 
 **0.2.0**
 
