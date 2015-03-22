@@ -66,8 +66,10 @@
             if (viewer.settings.keyboardNav) {
                 $(document).keydown(function(e) {
                     if (e.keyCode == 37) {
+                        imageSizeScaled(prevImage());
                         setActiveImage(prevImage());
                     } else if (e.keyCode == 39) {
+                        imageSizeScaled(nextImage());
                         setActiveImage(nextImage());
                     }
                 });
@@ -174,19 +176,27 @@
         };
 
         var toggleImageSize = function (image) {
+            if (image.hasClass("original")) {
+                imageSizeScaled(image);
+            } else {
+                imageSizeOriginal(image);
+            }
+        };
+
+        var imageSizeScaled = function(image) {
+            image.removeClass("original");
+            image.css("width", "100%");
+            image.css("height", "100%");
+            $(".interface").removeClass("hidden");
+        };
+
+        var imageSizeOriginal = function(image) {
             var origWidth = image.attr("data-orig-width");
             var origHeight = image.attr("data-orig-height");
-            if (image.hasClass("original")) {
-                image.removeClass("original");
-                image.css("width", "100%");
-                image.css("height", "100%");
-                $(".interface").removeClass("hidden");
-            } else {
-                image.addClass("original");
-                image.css("width", origWidth + "px");
-                image.css("height", origHeight + "px");
-                $(".interface").addClass("hidden");
-            }
+            image.addClass("original");
+            image.css("width", origWidth + "px");
+            image.css("height", origHeight + "px");
+            $(".interface").addClass("hidden");
         };
 
         var loadImages = function (images, updateDetails) {
