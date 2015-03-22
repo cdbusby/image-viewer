@@ -25,8 +25,6 @@
 
         var init = function () {
 
-            console.log(viewer.images);
-
             // Build the interface if required
             if (viewer.settings.interfaceTop) {
                 buildInterface("top");
