@@ -5,23 +5,28 @@
     color: #cccccc; }
   .interface.hidden {
     display: none; }
-
-#top {
-  position: absolute;
-  z-index: 2;
-  width: 100%;
-  padding: 1em;
-  box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.5); }
-  #top .details {
+  .interface .details {
     margin: 0;
     padding: 0;
     list-style: none;
     text-align: center;
     line-height: 1.5; }
-    #top .details li {
+    .interface .details li {
       display: inline;
       margin: 0.5em; }
+      .interface .details li a {
+        color: #ffffff; }
+
+#top, #bottom {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  padding: 0.5em;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.5); }
+
+#bottom {
+  bottom: 0; }
 
 #nav .nav-item {
   position: absolute;
@@ -46,7 +51,8 @@
     height: 100%;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-size: contain; }
+    background-size: contain;
+    cursor: pointer; }
     #viewer > div.active {
       display: block;
       margin: 0 auto; }

@@ -1,8 +1,9 @@
 (function ($) {
 
     var defaults = {
-        "selector": ".image",
+        "selector": ".image", // Class of images to be includes
         "interfaceTop": true, // Show the top details bar
+        "interfaceBottom": true, // Show the bottom details bar
         "interfaceNav": true, // Show the next and previous buttons
         "keyboardNav": true, // Enable arrow keys to navigate images
         "loadAtStart": 2 // How many images to load on init (minimum: 2)
@@ -28,6 +29,9 @@
             // Build the interface if required
             if (viewer.settings.interfaceTop) {
                 buildInterface("top");
+            }
+            if (viewer.settings.interfaceBottom) {
+                buildInterface("bottom");
             }
             if (viewer.settings.interfaceNav) {
                 buildInterface("nav");
@@ -90,11 +94,21 @@
                 el.before(
                     '<section id="top" class="interface">' +
                     '<ul class="details">' +
-                    '<li class="image-title"><span class="value"></span>' +
-                    '<li class="image-src"><span class="label">Filename:</span> <span class="value"></span>' +
-                    '<li class="image-width"><span class="label">Width:</span> <span class="value"></span>' +
-                    '<li class="image-height"><span class="label">Height:</span> <span class="value"></span>' +
-                    '<li class="image-scale"><span class="label">Scale:</span> <span class="value"></span>' +
+                        '<li class="image-position"><span class="value"></span>' +
+                        '<li class="image-title"><span class="value"></span>' +
+                        '<li class="image-src"><span class="label">Filename:</span> <span class="value"></span>' +
+                    '</ul>' +
+                    '</section>'
+                );
+            }
+            if (interface == "bottom") {
+                el.before(
+                    '<section id="bottom" class="interface">' +
+                    '<ul class="details">' +
+                        '<li class="image-width"><span class="label">Width:</span> <span class="value"></span>' +
+                        '<li class="image-height"><span class="label">Height:</span> <span class="value"></span>' +
+                        '<li class="image-scale"><span class="label">Scale:</span> <span class="value"></span>' +
+                        '<li class="image-download"><a href="#" target="_blank">Download</a>' +
                     '</ul>' +
                     '</section>'
                 );
@@ -143,11 +157,13 @@
                 'height': image.attr("data-orig-height"),
                 'scale': getImageScale(image, width, height)
             };
+            $(".image-position .value").text(image.index()+1 + "/" + viewer.numImages);
             $(".image-title .value").text(details.title);
             $(".image-src .value").text(details.src);
             $(".image-width .value").text(details.width);
             $(".image-height .value").text(details.height);
             $(".image-scale .value").text(details.scale);
+            $(".image-download a").attr("href", image.attr("data-src"));
         };
 
         // Still a work in progress
