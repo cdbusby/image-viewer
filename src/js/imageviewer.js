@@ -1,6 +1,7 @@
 (function ($) {
 
     var defaults = {
+        "selector": ".image",
         "interfaceTop": true, // Show the top details bar
         "interfaceNav": true, // Show the next and previous buttons
         "keyboardNav": true, // Enable arrow keys to navigate images
@@ -16,13 +17,15 @@
         var viewer = {},
             el = $(this);
 
-        viewer.settings = $.extend({}, defaults);
-        viewer.images = el.children(".image");
+        viewer.settings = $.extend({}, defaults, options);
+        viewer.images = el.children(viewer.settings.selector);
         viewer.firstImage = viewer.images.slice(0, 1);
         viewer.numImages = viewer.images.length;
         viewer.currentImage = el.children(".active");
 
         var init = function () {
+
+            console.log(viewer.images);
 
             // Build the interface if required
             if (viewer.settings.interfaceTop) {
@@ -46,7 +49,7 @@
             }
 
             // Bind image click to toggle image size
-            $(".image").bind("click", function (e) {
+            $(viewer.settings.selector).bind("click", function (e) {
                 e.preventDefault();
                 toggleImageSize($(this));
             });
@@ -117,7 +120,7 @@
         var nextImage = function () {
             var activePosition = $('.active').index();
             if (activePosition == viewer.numImages - 1) {
-                return $(".image").first();
+                return $(viewer.settings.selector).first();
             } else {
                 return $(".active").next();
             }
@@ -126,7 +129,7 @@
         var prevImage = function () {
             var activePosition = $('.active').index();
             if (activePosition === 0) {
-                return $(".image").last();
+                return $(viewer.settings.selector).last();
             } else {
                 return $(".active").prev();
             }
