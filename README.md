@@ -67,11 +67,7 @@ Build Instructions
 ------------------
 
 ```
-npm install --save-dev gulp
-```
-
-```
-npm install gulp-jshint gulp-sass gulp-minify-css gulp-livereload gulp-concat gulp-uglify gulp-rename --save-dev
+npm install
 ```
 
 ```

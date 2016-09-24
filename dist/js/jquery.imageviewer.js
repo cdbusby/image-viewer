@@ -99,8 +99,8 @@
             if (interface == "nav") {
                 el.before(
                     '<section id="nav" class="interface">' +
-                    '<a href="#" class="nav-item prev">Previous</a>' +
-                    '<a href="#" class="nav-item next">Next</a>' +
+                    '<button class="nav-item prev">Previous</button>' +
+                    '<button class="nav-item next">Next</button>' +
                     '</section>'
                 );
             }
